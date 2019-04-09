@@ -1,0 +1,28 @@
+library(dplyr)
+library(ggplot2)
+#데이터 프레임 불러오기
+midwest_raw<-as.data.frame(ggplot2::midwest)
+
+#데이터 프레임의 복사본 생성하기
+midwest_new<-midwest_raw
+
+#데이터 프레임 특징 파악하기
+str(midwest_new)
+View(midwest_new)
+
+#2번 문제
+midwest_new <- rename(midwest_new, total=poptotal)
+midwest_new <- rename(midwest_new, asian=popasian)
+
+#3번 문제
+midwest_new$percasian <- (midwest_new$asian / midwest_new$total) * 100
+hist(midwest_new$percasian)
+
+#4번 문제
+percasian_mean <- mean(midwest_new$percasian)
+percasian_mean
+midwest_new$mean <- ifelse(midwest_new$percasian > percasian_mean, "large", "small")
+
+#5번 문제
+table(midwest_new$mean)
+qplot(midwest_new$mean)
