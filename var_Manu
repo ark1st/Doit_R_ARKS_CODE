@@ -2,18 +2,25 @@ library(dplyr)
 library(ggplot2)
 mpg_raw <- ggplot2::mpg
 
+# 데이터 복사하기
 mpg_new <- mpg_raw
 
+# 변수 이름 바꾸기
 mpg_new <- rename(mpg_new, highway = hwy)
 mpg_new <- rename(mpg_new, city = cty)
 
+# 파생 변수 만들기
 mpg_new$total <- (mpg_new$city + mpg_new$highway)/2
 
+# 만든 파생 변수 평균 내기
 mpg_avg <- mean(mpg_new$total)
 
+# 조건문으로 파생변수 만들기
 mpg_new$test <- ifelse(mpg_new$total >= mpg_avg , "pass", "fail")
 
+# 조건 2개 이상
 mpg_new$test <- ifelse(mpg_new$total >= mpg_avg , "A",
                        ifelse(mpg_new$total >= 15 , "B", "C"))
-
+                       
+#데이터 윗부분 확인
 head(mpg_new)
