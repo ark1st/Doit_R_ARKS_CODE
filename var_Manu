@@ -1,0 +1,19 @@
+library(dplyr)
+library(ggplot2)
+mpg_raw <- ggplot2::mpg
+
+mpg_new <- mpg_raw
+
+mpg_new <- rename(mpg_new, highway = hwy)
+mpg_new <- rename(mpg_new, city = cty)
+
+mpg_new$total <- (mpg_new$city + mpg_new$highway)/2
+
+mpg_avg <- mean(mpg_new$total)
+
+mpg_new$test <- ifelse(mpg_new$total >= mpg_avg , "pass", "fail")
+
+mpg_new$test <- ifelse(mpg_new$total >= mpg_avg , "A",
+                       ifelse(mpg_new$total >= 15 , "B", "C"))
+
+head(mpg_new)
