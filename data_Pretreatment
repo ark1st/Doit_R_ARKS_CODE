@@ -1,0 +1,47 @@
+library(dplyr)
+exam <- read.csv("csv_exam.csv") 
+
+#조건에 맞는 행 데이터 추출
+exam %>% filter(class == 1)
+
+#열 데이터 추출 (원하는 변수 추출)
+exam %>% select(math) # math 열만 추출
+
+#함수 조합
+exam %>% 
+   filter(class == 1) %>% 
+   select(math)
+   
+#오름차순 정렬
+exam %>% arrange(math)
+ 
+#내림차순 정렬
+exam %>% arrange(math)
+ 
+#파생변수 추가
+exam %>% 
+ mutate(total = math + english + science)
+  
+#파생변수 추가 - 연속형 변수의 범주화
+exam %>% 
+ mutate(test = ifelse(science >= 60, "p", "f"))
+
+#요약 통계량
+exam %>% 
+    group_by(class) %>%    #class 로 나누기
+    summarise(mean_math = mean(math))    #class 별 평균
+    
+#열 합치기
+test1 <- data.frame(id = c(1,2,3,4,5),
+                    midterm = c(60,80,70,90,85))
+test2 <- data.frame(id = c(1,2,3,4,5),
+                    final = c(60,80,70,90,85))
+total <- left_join(test1, test2, by = "id") #id를 기준으로 합친다.
+
+#행 합치기
+group_a <- data.frame(id = c(1,2,3,4,5),
+                    test = c(60,80,70,90,85))
+group_b <- data.frame(id = c(6,7,8,9,10),
+                    test = c(70,83,65,95,80))
+group_all <- bind_rows(group_a, group_b)
+
