@@ -1,5 +1,5 @@
 library(dplyr)
-mpg_sample <- read.csv("C:/Users/ARK/Documents/R_file/0411/sample.csv")
+mpg_sample <- read.csv("sample_NoNA.csv")
 
 View(mpg_sample)
 
