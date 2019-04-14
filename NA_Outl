@@ -1,0 +1,38 @@
+library(dplyr)
+mpg_sample <- read.csv("C:/Users/ARK/Documents/R_file/0411/sample.csv")
+
+View(mpg_sample)
+
+is.na(mpg_sample)
+table(is.na(mpg_sample))
+
+table(is.na(mpg_sample$cty))
+
+mean(mpg_sample$cty)
+
+mpg_sample %>% filter(is.na(cty))
+
+mpg_Nona <- mpg_sample %>% filter(!is.na(cty))
+mean(mpg_Nona$cty)
+
+mpg_Nona2 <- mpg_sample %>% filter(!is.na(cty) & !is.na(hwy))
+
+mpg_Nona3 <- na.omit(mpg_sample)
+
+mean(mpg_sample, na.rm = T)
+
+mpg_sample %>% summarise(mean_cty = mean(cty, na.rm = T),
+                         sum_cty = sum(cty, na.rm = T),
+                         median_math = median(cty, na.rm = T))
+summary(mpg_sample, na.rm = T)
+
+boxplot(mpg_sample$cty)
+
+boxplot(mpg_sample$cty)$stats
+boxplot(mpg_sample$hwy)$stats
+
+mpg_sample$cty <- ifelse(mpg_sample$cty < 9 | mpg_sample$cty > 26, NA, mpg_sample$cty)
+mpg_sample$hwy <- ifelse(mpg_sample$hwy < 9 | mpg_sample$hwy > 26, NA, mpg_sample$hwy)
+
+meancty <- mean(mpg_sample$cty)
+mpg_sample$cty <- ifelse(is.na(mpg_sample$cty),meancty, mpg_sample$cty)
