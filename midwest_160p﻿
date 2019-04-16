@@ -1,0 +1,27 @@
+library(ggplot2)
+library(dplyr)
+midwest_raw <- as.data.frame(ggplot2::midwest)
+midwest_new <- midwest_raw
+View(midwest_new)
+
+#1번 문제
+midwest_new <- midwest_new %>% mutate(percyouth = (poptotal - popadults)/poptotal * 100)
+
+#2번 문제
+midwest_new %>% arrange(desc(percyouth)) %>% 
+  select(county, percyouth) %>% 
+  head(5)
+
+#3번 문제
+midwest_new <- midwest_new %>% 
+  mutate(gradeyouth = ifelse(percyouth >= 40 ,"large",
+                             ifelse(percyouth >= 30,"middle","small")))
+table(midwest_new$gradeyouth)
+
+#4번 문제
+midwest_new <- midwest_new %>% 
+  mutate(ratio_asian = popasian/poptotal*100)
+midwest_new %>% arrange(ratio_asian) %>% 
+  select(state, county, ratio_asian) %>% 
+  head(10)
+  
